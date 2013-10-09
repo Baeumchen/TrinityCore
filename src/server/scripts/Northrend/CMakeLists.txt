@@ -26,7 +26,7 @@ set(scripts_STAT_SRCS
   Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp
   Northrend/Ulduar/Ulduar/instance_ulduar.cpp
   Northrend/Ulduar/Ulduar/boss_auriaya.cpp
-  Northrend/Ulduar/Ulduar/boss_yoggsaron.cpp
+  Northrend/Ulduar/Ulduar/boss_yogg_saron.cpp
   Northrend/Ulduar/Ulduar/boss_hodir.cpp
   Northrend/Ulduar/Ulduar/boss_assembly_of_iron.cpp
   Northrend/Ulduar/Ulduar/boss_flame_leviathan.cpp
@@ -125,11 +125,11 @@ set(scripts_STAT_SRCS
   Northrend/VaultOfArchavon/boss_emalon.cpp
   Northrend/VaultOfArchavon/boss_toravon.cpp
   Northrend/zone_sholazar_basin.cpp
-  Northrend/UtgardeKeep/UtgardePinnacle/boss_palehoof.cpp
   Northrend/UtgardeKeep/UtgardePinnacle/boss_svala.cpp
-  Northrend/UtgardeKeep/UtgardePinnacle/instance_pinnacle.cpp
-  Northrend/UtgardeKeep/UtgardePinnacle/boss_ymiron.cpp
+  Northrend/UtgardeKeep/UtgardePinnacle/boss_palehoof.cpp
   Northrend/UtgardeKeep/UtgardePinnacle/boss_skadi.cpp
+  Northrend/UtgardeKeep/UtgardePinnacle/boss_ymiron.cpp
+  Northrend/UtgardeKeep/UtgardePinnacle/instance_utgarde_pinnacle.cpp
   Northrend/UtgardeKeep/UtgardePinnacle/utgarde_pinnacle.h
   Northrend/UtgardeKeep/UtgardeKeep/boss_ingvar_the_plunderer.cpp
   Northrend/UtgardeKeep/UtgardeKeep/boss_skarvald_dalronn.cpp
@@ -193,7 +193,7 @@ set(scripts_STAT_SRCS
   Northrend/DraktharonKeep/boss_novos.cpp
   Northrend/DraktharonKeep/drak_tharon_keep.h
   Northrend/DraktharonKeep/boss_tharon_ja.cpp
-  Northrend/DraktharonKeep/boss_dred.cpp
+  Northrend/DraktharonKeep/boss_king_dred.cpp
 )
 
 message("  -> Prepared: Northrend")

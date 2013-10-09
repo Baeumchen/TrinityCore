@@ -579,8 +579,8 @@ struct WintergraspBuildingSpawnData
 
 struct WintergraspRebuildableBuildingData
 {
-    uint32 entry;
     uint64 Guid;
+    uint32 entry;
     uint32 WorldState;
     float x;
     float y;
@@ -1189,7 +1189,7 @@ struct BfWGGameObjectBuilding
                 if (m_WG->GetRelic())
                     m_WG->GetRelic()->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
                 else
-                    sLog->outError(LOG_FILTER_GENERAL, "BattlefieldWG: Relic not found.");
+                    TC_LOG_ERROR(LOG_FILTER_GENERAL, "BattlefieldWG: Relic not found.");
                 break;
         }
 
@@ -1481,6 +1481,7 @@ struct WGWorkshop
 
         bf = _bf;
         workshopId = _workshopId;
+        teamControl = BATTLEFIELD_WG_TEAM_NEUTRAL;
     }
 
     void GiveControlTo(uint8 team, bool init /* for first call in setup*/)
@@ -1558,7 +1559,7 @@ struct WintergraspWorkshopData
     }
 
     // Spawning associate creature and store them
-    void AddCreature(WintergraspObjectPositionData obj)
+    void AddCreature(const WintergraspObjectPositionData& obj)
     {
         if (Creature* creature = m_WG->SpawnCreature(obj.entryHorde, obj.x, obj.y, obj.z, obj.o, TEAM_HORDE))
             m_CreatureOnPoint[TEAM_HORDE].insert(creature->GetGUID());
@@ -1568,7 +1569,7 @@ struct WintergraspWorkshopData
     }
 
     // Spawning Associate gameobject and store them
-    void AddGameObject(WintergraspObjectPositionData obj)
+    void AddGameObject(const WintergraspObjectPositionData& obj)
     {
         if (GameObject* gameobject = m_WG->SpawnGameObject(obj.entryHorde, obj.x, obj.y, obj.z, obj.o))
             m_GameObjectOnPoint[TEAM_HORDE].insert(gameobject->GetGUID());
@@ -1629,7 +1630,7 @@ struct WintergraspWorkshopData
 
                 // Found associate graveyard and update it
                 if (m_Type < BATTLEFIELD_WG_WORKSHOP_KEEP_WEST)
-                    if (m_WG && m_WG->GetGraveyardById(m_Type))
+                    if (m_WG->GetGraveyardById(m_Type))
                         m_WG->GetGraveyardById(m_Type)->GiveControlTo(TEAM_ALLIANCE);
 
                 m_TeamControl = team;
@@ -1667,7 +1668,7 @@ struct WintergraspWorkshopData
 
                 // Update graveyard control
                 if (m_Type < BATTLEFIELD_WG_WORKSHOP_KEEP_WEST)
-                    if (m_WG && m_WG->GetGraveyardById(m_Type))
+                    if (m_WG->GetGraveyardById(m_Type))
                         m_WG->GetGraveyardById(m_Type)->GiveControlTo(TEAM_HORDE);
 
                 m_TeamControl = team;

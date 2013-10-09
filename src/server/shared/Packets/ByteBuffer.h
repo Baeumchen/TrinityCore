@@ -23,6 +23,7 @@
 #include "Errors.h"
 #include "ByteConverter.h"
 
+#include <ace/OS_NS_time.h>
 #include <exception>
 #include <list>
 #include <map>
@@ -37,7 +38,7 @@ class ByteBufferException : public std::exception
 public:
     ~ByteBufferException() throw() { }
 
-    char const * what() const throw() { return msg_.c_str(); }
+    char const* what() const throw() { return msg_.c_str(); }
 
 protected:
     std::string & message() throw() { return msg_; }
@@ -457,8 +458,9 @@ class ByteBuffer
 
         void AppendPackedTime(time_t time)
         {
-            tm* lt = localtime(&time);
-            append<uint32>((lt->tm_year - 100) << 24 | lt->tm_mon  << 20 | (lt->tm_mday - 1) << 14 | lt->tm_wday << 11 | lt->tm_hour << 6 | lt->tm_min);
+            tm lt;
+            ACE_OS::localtime_r(&time, &lt);
+            append<uint32>((lt.tm_year - 100) << 24 | lt.tm_mon  << 20 | (lt.tm_mday - 1) << 14 | lt.tm_wday << 11 | lt.tm_hour << 6 | lt.tm_min);
         }
 
         void put(size_t pos, const uint8 *src, size_t cnt)

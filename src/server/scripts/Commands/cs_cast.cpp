@@ -33,22 +33,22 @@ class cast_commandscript : public CommandScript
 public:
     cast_commandscript() : CommandScript("cast_commandscript") { }
 
-    ChatCommand* GetCommands() const
+    ChatCommand* GetCommands() const OVERRIDE
     {
         static ChatCommand castCommandTable[] =
         {
-            { "back",           SEC_ADMINISTRATOR,  false, &HandleCastBackCommand,              "", NULL },
-            { "dist",           SEC_ADMINISTRATOR,  false, &HandleCastDistCommand,              "", NULL },
-            { "self",           SEC_ADMINISTRATOR,  false, &HandleCastSelfCommand,              "", NULL },
-            { "target",         SEC_ADMINISTRATOR,  false, &HandleCastTargetCommad,             "", NULL },
-            { "dest",           SEC_ADMINISTRATOR,  false, &HandleCastDestCommand,              "", NULL },
-            { "",               SEC_ADMINISTRATOR,  false, &HandleCastCommand,                  "", NULL },
-            { NULL,             0,                  false, NULL,                                "", NULL }
+            { "back",   rbac::RBAC_PERM_COMMAND_CAST_BACK,   false, &HandleCastBackCommand,  "", NULL },
+            { "dist",   rbac::RBAC_PERM_COMMAND_CAST_DIST,   false, &HandleCastDistCommand,  "", NULL },
+            { "self",   rbac::RBAC_PERM_COMMAND_CAST_SELF,   false, &HandleCastSelfCommand,  "", NULL },
+            { "target", rbac::RBAC_PERM_COMMAND_CAST_TARGET, false, &HandleCastTargetCommad, "", NULL },
+            { "dest",   rbac::RBAC_PERM_COMMAND_CAST_DEST,   false, &HandleCastDestCommand,  "", NULL },
+            { "",       rbac::RBAC_PERM_COMMAND_CAST,        false, &HandleCastCommand,      "", NULL },
+            { NULL,     0,                             false, NULL,                    "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "cast",           SEC_ADMINISTRATOR,  false, NULL,                                "", castCommandTable },
-            { NULL,             0,                  false, NULL,                                "", NULL }
+            { "cast",   rbac::RBAC_PERM_COMMAND_CAST,        false, NULL,                    "", castCommandTable },
+            { NULL,     0,                             false, NULL,                    "", NULL }
         };
         return commandTable;
     }
@@ -230,7 +230,7 @@ public:
             return false;
         }
 
-        if (!caster->getVictim())
+        if (!caster->GetVictim())
         {
             handler->SendSysMessage(LANG_SELECTED_TARGET_NOT_HAVE_VICTIM);
             handler->SetSentErrorMessage(true);
@@ -256,7 +256,7 @@ public:
 
         bool triggered = (triggeredStr != NULL);
 
-        caster->CastSpell(caster->getVictim(), spellId, triggered);
+        caster->CastSpell(caster->GetVictim(), spellId, triggered);
 
         return true;
     }
